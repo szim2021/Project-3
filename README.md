@@ -1,3 +1,66 @@
 # Project-3
 This repository contains Project 3 from ITSS 3312.002
 
+Research and Analysis.  Describe the system including input, processing, arrays, classes and output in your own words.
+
+As I began this project, I focused on figuring out the new requirements to add onto my previous project. Once I had a list of new requirements, I copy and pasted Project 2 so I could edit it.
+
+Creating a Scanner object, just as I did in the last project, allowed users to input values that would be necessary for processing the program. Throughout the program, I utilized the input.nextInt() and input.next() method from the Scanner object to do this. Later, I also used the Scanner object for my setCourses() method to read lines from the File object I created by passing that as an argument. That method also uses the .hasNextLine() method, as shown in our lecture PowerPoint slides, to loop through file contents until it reaches a null.
+
+The method that required the largest amount of research is my setCourses() method. First, I decided to design the method to only write the courses to the file using PrintWriter, after creating a File object. However, while testing this, I noticed it would overwrite any previous courses the user would input. Doing some research, I realized that PrintWriter will overwrite any text in the given file while FileWriter, using the correct constructor, will allow me to add on to the file (using Boolean). I found this information on GeeksforGeeks at this website: https://www.geeksforgeeks.org/file-handling-java-using-filewriter-filereader/.
+However, I still ran into problems with the reader. I decided to use Scanner with my Courses.txt file as the object passed into it, which we learned about in class. However, when I tried to contain the string values from each line into variables, being cNameMatch and cNumMatch, the program would not recognize the values equal. Hearing from the latest lecture that it would be acceptable to use “Stack Overflow” as a resource, I did some research on there. Going to the link https://stackoverflow.com/questions/54704096/searching-for-username-and-password-along-with-other-variables-in-a-text-file I found a method of doing this. Looking at this example, I patterned my program in a similar manner. My program is slightly different, as I do not use the ”Delimiter” and my Scanner object looks at each line. Doing more research to understand why this would be an acceptable method of comparing the values, I discovered why I need to utilize two specific String methods. Going back to the PowerPoint lectures from Week 1, I found multiple slides that contained useful information regarding String. I consulted https://www.geeksforgeeks.org/java-string-trim-method-example/?ref=gcse and discovered that I would need to use .trim() to ensure the String wasn’t picking up any space from the file. Then, I consulted https://www.geeksforgeeks.org/difference-equals-method-java/ to correctly design the program to check if the two values are equal using .equals(). Since the values are now using .trim(), they need to be passed as objects and have their contained data checked. Using these two String methods, I can design a loop that reads the values line-by-line from the file and check if the content already exists. Additionally, I implemented a Boolean value that will be reset to false every time the method is called. This Boolean value will be set to true if a match is found and will allow the if-statement to run that will write the course to the file.
+
+If the above resource is not allowed and I misunderstood the permission to use it, please remove points for this portion of the project. Overall, I had an idea of how to implement the comparison feature, but the resource on “Stack Overflow” provided a great guideline and foundation.
+
+I also created a PrintWriter object, using the methodology discussed in class and shown in the example code document, to write both the Student Report and the Course Assignment. These two portions of code contain the methods .write(), .flush(), and .close(). The write() method will actually implement the text to the text file, the .flush() method will close that text, and then .close() method close the writing to the file. Eclipse automatically required usage of certain try-catch blocks, so those are the types of exception handling I used to cover any errors that could result from that code.
+
+In terms of interfaces, I used the example code provided on eLearning and watched the recording of the related lecture as a reference for implementation. Knowing the program would require interfaces for both the Student class and Course class, I first gathered a list of every method that would be used in each class. Then, I created the interfaces with empty methods to be fleshed out in both classes. Until I wrote the body of each method in the interface, I received an error implying it must be an abstract class if each method wasn’t used.
+
+Related to arrays, I used the same methodology as the previous project for creating an object array. One object array in this project stores the Student objects created by the Student class and the other object array stores the Student Employee objects created by the Student Employee class. Saving these objects into the arrays allows for easier processing when looping through different students.
+
+Another reader object I included in my program is BufferReader. I implemented this using our lecture and related code document as a resource. The reader will read the information in the “CourseAssignment” file line by line. This is done by catching each line from the document inside of the declared string variable and then printing it to the console via my Scanner object. Eclipse suggested exception handling by means of the “FileNotFound” exception in case the file does not exist.
+
+
+Design.  Describe the major steps for solving the problem.
+
+As suggested by the outline of this document, I divided my program into the following sections:
+•	Interfaces
+•	Classes
+•	Arrays
+•	File creation, reading and writing
+•	Search
+•	Menu Options (Switch Statements and Loops)
+•	Variables
+•	Gathering of inputs
+
+As I began this project, I focused on figuring out the new requirements to add onto my previous project. Once I had a list of new requirements, I copied and pasted Project 2 so I could edit it. 
+After this, I focused on creating the required interfaces for each class, both Student and Object. I implemented the previous getters and setters from Project 2’s Student class in the Student interface. Then, I created the interface for the Course class with getters and setters I could see from the project requirements.
+
+After implementing each interface, I continued with setting up the Student Employee subclass for the Student class and the Course class. I moved multiple Student class methods from the previous project and fleshed them out again after implementing the interface. The Student Employee subclass extended methods from the Student class, along with its altered constructor. New methods for this subclass included the one that allows users to assign on-campus positions and one that would then display all students with an on-campus job. Separating Student objects from Student Employee objects made this task much simpler, as it would only print information from Student Employees.
+
+Project 3 did not include many new arrays. I did implement the array from Project 2 that would allow Student objects to be stored. Furthermore, I used the same type of object array to hold the Student Employee objects I created.
+
+To meet most of the new requirements, I have several places in Project 3 where I implemented file creation, File Reader, and File Writer. The first requirement noting the use of the File Writer in this project involved the Student Class. Expanding the “getStudent” method, I created a File object name “Student Report” and Writer object to write the full report that I printed out to users. This portion of the code is also surrounded by “try-catch” blocks to ensure no errors print in red if the file is already existent. Additionally, the Writer object is surrounded my “try-catch” blocks in case the file in non-existent. After creating this required file, I then moved on to the required “Courses.txt” file. I added this requirement inside of my “setCourse” method, so the program will write to the file once the user requests a course creation. This portion of code is surrounded by the same “try-catch” block. Finally, I wrote the last section related to files, which is the “CourseAssignment.txt” file. This file is created in the “assignCourse” method and then read in the “getCourses” method. To read the text written in “CourseAssignment.txt”, I created a BufferReader object that would print out contents of the file, line by line.
+
+Overall, the search functions of this program are quite similar to the last program for Project 2. To assign an on-campus to a student, I implemented the same search method by student ID. The user inputs the ID and a loop searches through the array of objects for a match. This would allow me to retrieve their information from the Student object, such as name, and assign it to the newly created Student Employee object. This same search methodology is utilized to assign a course to a student. Again, the program uses the “getStudentID” method to match the searchID and return the right Student object.
+
+To create the menu and submenus, I first imported the menu from the previous project and all of the switch statements it contains. Once I had this written out, I contained this menu as the SMS menu inside of an outer switch statement for the “Course and Student Management System.” Similar to the last project, I used switch statements to allow users selection of each option. The outer switch statements contains two cases. Case 1 takes users to the SMS and case 2 takes users to the CMS. Within the SMS, I have the same cases, plus case 5 for assigning a job and case 6 for displaying student employees. The CMS has three cases within the switch statement. Case 1 allows users to add a course, case 2 allows users to assign a course, and case 3 allows users to display students with courses. If the user exits the CMS or SMS, the program will take them back to the overall menu via the do-while loop.
+
+As for variables declaration, I implemented the same variables as the previous project with a few additions. As I would now need to have three switch statements for the three menus, I added a variable for “CMSSelection” and “SMSSelection.”
+
+Input gathering for this program is also very similar to the previous project. To add on to this project, I focused on the new menu options and the inputs those would require from the users.
+
+
+Testing.  Describe how you tested this program.  Include descriptions of testing for specific calculations and/or algorithms, methods, and logic.
+
+As suggested by the project document, I created two Student objects to test the program and all the menu options that would interact with them.
+
+First, I tested the do-while loops I implemented in each system. I did this by selecting options from each one, exiting each one, and ensuring it would always take the user back to the “Student and Course Management System.”
+
+After testing the loops, I began testing one menu at a time, starting with the SMS. Within the SMS, I created two Student objects using the first menu option. Using those two students, I tested the third option to make sure these students would be displayed with their information. Since this option should also write to a file, I searched my laptop for this txt file and made sure the report was there. After that, I checked the 4th menu option to make sure I could retrieve student information by giving a specific student ID. Then, I tested the 5th option by choosing one of the two students to assign a job. Once assigned a job, I chose the 6th option to make sure the Student Employee object would be displayed to users.
+
+Then, I moved onto testing the CMS. First, I created a course using the first menu option. After creating the course, I opened the file from my laptop to make sure the program wrote the course to “Course.txt.” This menu option turned out to be the most complicated portion of the program for me. Every time I tested the code to see if the program would read the file and make sure the course did not already exist, it returned an error or did not recognize it already existed. Explained in the “Research and Analysis” heading, I used different methods for String and managed to solve the issue.
+
+I returned to the program and tested the second option by assigning a student a course. As this option would also write to “CourseAssignment.txt”, I looked for this on my laptop to ensure it would write to this file. To also check this file, I selected option three to display students with a course assigned.
+
+Additionally, I checked each of my uses of “try-catch” blocks to see if they would return text rather than an error. For example, when selecting a menu option as a user, I input an integer rather than a string value. Rather than receiving red text, the program printed the statement I specified within the catch block.
